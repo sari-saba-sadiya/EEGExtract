@@ -19,7 +19,16 @@ A pyhton package for extracting EEG features. First developed for the paper ["Un
 <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">
 <img src="https://cdn2.iconfinder.com/data/icons/business-and-finance-311/32/Business_and_Finance_scale_weight_weights_scales_balance-256.png" alt="GPL-3.0 License" height="16" style="vertical-align:middle"> GPL-3.0 License </img></a>
 
-Free to use and modify, but must cite the original publication below. 
+Free to use and modify, but must cite the original publication below.
+
+## Important Note
+the feature extractor is an independent section that can be used with any artifact correction method (recently there have been quite a few including some notable example [1,2]). If you are interested in the specific setup that was used in the paper, as well as a link to the data, please visit [the following repository](https://github.com/sari-saba-sadiya/EEG-Artifact-Correction-Via-Completion).
+
+[1] S. Phadikar, N. Sinha, and R. Ghosh, “Automatic eeg eyeblink artefactidentification and removal technique using independent componentanalysis in combination with support vector machines and denoisingautoencoder”
+
+[2] B. Somers, T. Francart, and A. Bertrand, “A generic eeg artifactremoval algorithm based on the multi-channel wiener filter.”
+
+
 
 ## Cite
 ```
