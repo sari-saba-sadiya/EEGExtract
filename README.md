@@ -21,6 +21,51 @@ A pyhton package for extracting EEG features. First developed for the paper ["Un
 
 Free to use and modify, but must cite the original publication below.
 
+## The Features
+| Signal Descriptor                       | Brief Description|
+| --------------- | --------------- |
+| __Complexity Features__                                 | degree of randomness or irregularity  hline|
+| Shannon Entropy        | additive measure of signal stochasticity    |
+| Tsalis Entropy (n=10)  | non-additive measure of signal stochasticity  |
+| Information Quantity  (δ,α,θ,β,γ)  | entropy of a wavelet decomposed signal         |
+| Cepstrum Coefficients (n=2)                        | rate of change in signal spectral band power   |
+| Lyapunov Exponent                                | separation between signals with similar trajectories   |
+| Fractal Embedding Dimension                      | how signal properties change with scale |
+| Hjorth Mobility                                  | mean signal frequency   |
+| Hjorth Complexity                                | rate of change in mean signal frequency   |
+| False Nearest Neighbor                           | signal continuity and smoothness |
+| ARMA Coefficients (n=2)                       | autoregressive coefficient of signal at (t-1) and (t-2)  hline|
+| __Continuity Features__                               | clinically grounded signal characteristics |
+| Median Frequency                               |   the median spectral power    |
+| δ band Power                             |  spectral power in the 0-3Hz range  |
+| α band Power                             |  spectral power in the 4-7Hz range   |
+| θ band Power                             |  spectral power in the 8-15Hz range   |
+| β band Power                              |  spectral power in the 16-31Hz range   |
+| γ band Power                             |  spectral power above 32Hz |
+| Median Frequency                               |   median spectral power   |
+| Standard Deviation                              | average difference between signal value and it's mean   |
+| α/δ Ratio                          | ratio of the power spectral density in $alpha$ and $delta$ bands |
+| Regularity (burst-suppression)                 | measure of signal stationarity / spectral consistency  |
+| Voltage < (5μ, 10μ, 20μ)          |  low signal amplitude |
+| Normal EEG                                |        Peak spectral power textgreater= 8Hz   |
+| Diffuse Slowing                           |        indicator of peak power spectral density less than 8Hz   |
+| Spikes                                    |        signal amplitude exceeds $mu$ by 3$sigma$ for 70 ms or less   |
+| Delta Burst after spike                   |        Increased $delta$ after spike, relative to $delta$ before spike |
+| Sharp spike                               |        spikes lasting less than 70 ms   |
+| Number of Bursts                          |        number of amplitude bursts  |
+| Burst length μ and σ             |        statistical properties of bursts |
+| Burst band powers (δ,α,θ,β,γ)   | spectral power of bursts  |
+| Number of Suppressions                            | segments with contiguous amplitude suppression  |
+| Suppression length μ and σ             | statistical properties of suppressions  hline|
+| __Connectivity Features__                             |             interactions between EEG electrode pairs  hline|
+| Coherence - δ                            | correlation in in 0-4 Hz power between signals    |
+| Coherence - All                                 | correlation in overall power between signals |
+| Mutual Information                               | measure of dependence |
+| Granger causality - All                          | measure of causality |
+| Phase Lag Index                                  | association between the instantaneous phase of signals |
+| Cross-correlation Magnitude                      | maximum correlation between two signals |
+| Crosscorrelation - Lag                           | time-delay that maximizes correlation between signals |
+
 ## Important Note
 the feature extractor is an independent section that can be used with any artifact correction method (recently there have been quite a few including some notable example [1,2]). If you are interested in the specific setup that was used in the paper, as well as a link to the data, please visit [the following repository](https://github.com/sari-saba-sadiya/EEG-Artifact-Correction-Via-Completion).
 
