@@ -24,7 +24,7 @@ Free to use and modify, but must cite the original publication below.
 ## The Features
 | Signal Descriptor                       | Brief Description|
 | --------------- | --------------- |
-| __Complexity Features__                                 | degree of randomness or irregularity  hline|
+| __Complexity Features__                                 | degree of randomness or irregularity  |
 | Shannon Entropy        | additive measure of signal stochasticity    |
 | Tsalis Entropy (n=10)  | non-additive measure of signal stochasticity  |
 | Information Quantity  (δ,α,θ,β,γ)  | entropy of a wavelet decomposed signal         |
@@ -34,7 +34,7 @@ Free to use and modify, but must cite the original publication below.
 | Hjorth Mobility                                  | mean signal frequency   |
 | Hjorth Complexity                                | rate of change in mean signal frequency   |
 | False Nearest Neighbor                           | signal continuity and smoothness |
-| ARMA Coefficients (n=2)                       | autoregressive coefficient of signal at (t-1) and (t-2)  hline|
+| ARMA Coefficients (n=2)                       | autoregressive coefficient of signal at (t-1) and (t-2)  |
 | __Continuity Features__                               | clinically grounded signal characteristics |
 | Median Frequency                               |   the median spectral power    |
 | δ band Power                             |  spectral power in the 0-3Hz range  |
@@ -44,20 +44,20 @@ Free to use and modify, but must cite the original publication below.
 | γ band Power                             |  spectral power above 32Hz |
 | Median Frequency                               |   median spectral power   |
 | Standard Deviation                              | average difference between signal value and it's mean   |
-| α/δ Ratio                          | ratio of the power spectral density in $alpha$ and $delta$ bands |
+| α/δ Ratio                          | ratio of the power spectral density in α and δ bands |
 | Regularity (burst-suppression)                 | measure of signal stationarity / spectral consistency  |
 | Voltage < (5μ, 10μ, 20μ)          |  low signal amplitude |
 | Normal EEG                                |        Peak spectral power textgreater= 8Hz   |
 | Diffuse Slowing                           |        indicator of peak power spectral density less than 8Hz   |
-| Spikes                                    |        signal amplitude exceeds $mu$ by 3$sigma$ for 70 ms or less   |
-| Delta Burst after spike                   |        Increased $delta$ after spike, relative to $delta$ before spike |
+| Spikes                                    |        signal amplitude exceeds μ by 3σ for 70 ms or less   |
+| Delta Burst after spike                   |        Increased δ after spike, relative to δ before spike |
 | Sharp spike                               |        spikes lasting less than 70 ms   |
 | Number of Bursts                          |        number of amplitude bursts  |
 | Burst length μ and σ             |        statistical properties of bursts |
 | Burst band powers (δ,α,θ,β,γ)   | spectral power of bursts  |
 | Number of Suppressions                            | segments with contiguous amplitude suppression  |
-| Suppression length μ and σ             | statistical properties of suppressions  hline|
-| __Connectivity Features__                             |             interactions between EEG electrode pairs  hline|
+| Suppression length μ and σ             | statistical properties of suppressions |
+| __Connectivity Features__                             |             interactions between EEG electrode pairs  |
 | Coherence - δ                            | correlation in in 0-4 Hz power between signals    |
 | Coherence - All                                 | correlation in overall power between signals |
 | Mutual Information                               | measure of dependence |
