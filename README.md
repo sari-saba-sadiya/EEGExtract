@@ -1,7 +1,7 @@
 # EEGExtract
 [Sari Saba-Sadiya](https://cse.msu.edu/~sadiyasa/)<sup>1,2</sup>,
 [Eric Chantland]()<sup>1</sup>,
-[Taushang Liu](https://npal.psy.msu.edu/)<sup>1</sup>,
+[Taosheng Liu](https://npal.psy.msu.edu/)<sup>1</sup>,
 [Tuka Alhanai](https://talhanai.xyz/)<sup>3</sup>,
 [Mohammad Ghassemi](https://ghassemi.xyz/)<sup>1</sup><br>
 <sub>
