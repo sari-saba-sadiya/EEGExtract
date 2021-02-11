@@ -83,7 +83,7 @@ Additionally, `EEGExtract` also contains implementations for a number of auxilia
 ## Important Note
 The feature extractor is an independent section that can be used with any artifact correction method (recently there have been quite a few including some notable example [1,2]). If you are interested in the specific setup that was used in the paper, as well as a link to the data, please visit [the following repository](https://github.com/sari-saba-sadiya/EEG-Artifact-Correction-Via-Completion).
 
-[1] S. Phadikar, N. Sinha, and R. Ghosh, “Automatic eeg eyeblink artefact identification and removal technique using independent component analysis in combination with support vector machines and denoising autoencoder”
+[1] S. Phadikar, N. Sinha, and R. Ghosh, “Automatic eeg eyeblink artifact identification and removal technique using independent component analysis in combination with support vector machines and denoising autoencoder”
 
 [2] B. Somers, T. Francart, and A. Bertrand, “A generic eeg artifact removal algorithm based on the multi-channel wiener filter.”
 
