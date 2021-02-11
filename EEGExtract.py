@@ -12,8 +12,7 @@ from pyinform import mutualinfo
 from statsmodels import tsa
 from sklearn.metrics import mutual_info_score
 import numpy as np
-from scipy import signal
-from scipy import integrate
+from scipy import signal,integrate
 from sklearn.metrics.cluster import normalized_mutual_info_score as normed_mutual_info 
 
 ################################################
@@ -108,8 +107,8 @@ def burst_supression_detection(x,fs,suppression_threshold = 10):
 ##########
 # Coherence in the Delta Band
 def CoherenceDelta(eegData, i, j, fs=100):
-    nfft=500
-    f, Cxy = ss.coherence(eegData[i,:,:], eegData[j,:,:], fs=fs, window=np.hanning(nfft), nfft=nfft, axis=0)
+    nfft=eegData.shape[1]
+    f, Cxy = signal.coherence(eegData[i,:,:], eegData[j,:,:], fs=fs, nfft=nfft, axis=0)#, window=np.hanning(nfft))
     out = np.mean(Cxy[np.all([f >= 0.5, f<=4], axis=0)], axis=0)
     return out
     
@@ -176,7 +175,6 @@ def bandpower(data, fs, fband):
 # computes the same thing as vecbandpower but with a loop
 def pfvecbandpower(data, fs, fband):
     bpowers = np.zeros((data.shape[0], data.shape[2]))
-
     for i in range(data.shape[0]):
         freqs, powers = periodogram(data[i, :, :], fs, axis=0)
         idx_min = np.argmax(freqs > fband[0]) - 1
@@ -405,8 +403,8 @@ def eegRatio(eegData,fs):
 	# calculate the power
 	powers_alpha = bandPower(eegData, 8, 12, fs)
 	powers_delta = bandPower(eegData, 0.5, 4, fs)
-	ratio_res = np.sum(powers_alpha,axis=1) / np.sum(powers_delta,axis=0)
-	return ratio_res
+	ratio_res = np.sum(powers_alpha,axis=0) / np.sum(powers_delta,axis=0)
+	return np.expand_dims(x, axis=0)
 
 ###########
 # Regularity (burst-suppression)
@@ -471,7 +469,7 @@ def burstAfterSpike(eegData,eegData_subband,minNumSamples=7,stdAway = 3):
             preBurst = 0
             postBurst = 0
             mean = np.mean(eegData[chan, :, epoch])
-            std = np.std(eegData[chan,:,epoch],axis=1)
+            std = np.std(eegData[chan,:,epoch])
             idxList = signal.find_peaks(abs(eegData[chan,:,epoch]-mean), stdAway*std,epoch,width=minNumSamples)[0]
             for idx in idxList:
                 preBurst += np.mean(eegData_subband[chan,idx-7:idx-1,epoch])
@@ -486,7 +484,7 @@ def shortSpikeNum(eegData,minNumSamples=7,stdAway = 3):
     for chan in range(H.shape[0]):
         for epoch in range(H.shape[1]):
             mean = np.mean(eegData[chan, :, epoch])
-            std = np.std(eegData[chan,:,epoch],axis=1)
+            std = np.std(eegData[chan,:,epoch])
             longSpikes = set(signal.find_peaks(abs(eegData[chan,:,epoch]-mean), 3*std,epoch,width=7)[0])
             shortSpikes = set(signal.find_peaks(abs(eegData[chan,:,epoch]-mean), 3*std,epoch,width=1)[0])
             H[chan,epoch] = len(shortSpikes.difference(longSpikes))
@@ -498,7 +496,7 @@ def numBursts(eegData,fs):
 	bursts = []
 	supressions = []
 	for epoch in range(eegData.shape[2]):
-		epochBurst,epochSupressions = burst_supression_detection(eegData[:,:,epoch],fs,supression_threshold=10,low=30,high=49)
+		epochBurst,epochSupressions = burst_supression_detection(eegData[:,:,epoch],fs,suppression_threshold=10)#,low=30,high=49)
 		bursts.append(epochBurst)
 		supressions.append(epochSupressions)
 	# Number of Bursts
@@ -514,14 +512,14 @@ def burstLengthStats(eegData,fs):
 	bursts = []
 	supressions = []
 	for epoch in range(eegData.shape[2]):
-		epochBurst,epochSupressions = burst_supression_detection(eegData[:,:,epoch],fs,supression_threshold=10,low=30,high=49)
+		epochBurst,epochSupressions = burst_supression_detection(eegData[:,:,epoch],fs,suppression_threshold=10)#,low=30,high=49)
 		bursts.append(epochBurst)
 		supressions.append(epochSupressions)
 	# Number of Bursts
 	burstMean_res = np.zeros((eegData.shape[0], eegData.shape[2]))
 	burstStd_res = np.zeros((eegData.shape[0], eegData.shape[2]))
-	for chan in range(numBursts_res.shape[0]):
-		for epoch in range(numBursts_res.shape[1]):
+	for chan in range(burstMean_res.shape[0]):
+		for epoch in range(burstMean_res.shape[1]):
 			burstMean_res[chan,epoch] = np.mean([burst[1]-burst[0] for burst in bursts[epoch][chan]])
 			burstStd_res[chan,epoch] = np.std([burst[1]-burst[0] for burst in bursts[epoch][chan]])
 	burstMean_res = np.nan_to_num(burstMean_res)
@@ -531,11 +529,11 @@ def burstLengthStats(eegData,fs):
 ##########
 # Burst band powers (δ, α, θ, β, γ)
 def burstBandPowers(eegData, lowcut, highcut, fs, order=7):
-	burst_powers = np.zeros((eegData.shape[0], eegData.shape[2]))
+	band_burst_powers = np.zeros((eegData.shape[0], eegData.shape[2]))
 	bursts = []
 	supressions = []
 	for epoch in range(eegData.shape[2]):
-		epochBurst,epochSupressions = burst_supression_detection(eegData[:,:,epoch],fs,supression_threshold=10,low=30,high=49)
+		epochBurst,epochSupressions = burst_supression_detection(eegData[:,:,epoch],fs,suppression_threshold=10)#,low=30,high=49)
 		bursts.append(epochBurst)
 		supressions.append(epochSupressions)
 	eegData_band = filt_data(eegData, lowcut, highcut, fs, order=7)
@@ -543,42 +541,47 @@ def burstBandPowers(eegData, lowcut, highcut, fs, order=7):
 		for chan,chanBursts in enumerate(epochBursts):
 			epochPowers = []  
 			for burst in chanBursts:
-				# delta (0.5–4 Hz)
-				if burst[1] == 500:
+				if burst[1] == eegData.shape[1]:
 					burstData =  eegData_band[:,burst[0]:,epoch]
 				else:
 					burstData =  eegData_band[:,burst[0]:burst[1],epoch]
 				freqs, powers = signal.periodogram(burstData, fs, axis=1)
 				epochPowers.append(np.mean(powers,axis=1))
-				band_burst_powers[chan,epoch] = np.mean(epochPowers)	
+			band_burst_powers[chan,epoch] = np.mean(epochPowers)	
 	return band_burst_powers
 
 ##########
 # Number of Suppressions
-def numSuppressions(eegData,supression_threshold,fs):
+def numSuppressions(eegData,fs,suppression_threshold=10):
 	bursts = []
 	supressions = []
 	for epoch in range(eegData.shape[2]):
-		epochBurst,epochSupressions = burst_supression_detection(eegData[:,:,epoch],fs,supression_threshold=10,low=30,high=49)
+		epochBurst,epochSupressions = burst_supression_detection(eegData[:,:,epoch],fs,suppression_threshold=suppression_threshold)#,low=30,high=49)
 		bursts.append(epochBurst)
 		supressions.append(epochSupressions)
 	numSupprs_res = np.zeros((eegData.shape[0], eegData.shape[2]))
-	for chan in range(numBursts_res.shape[0]):
-		for epoch in range(numBursts_res.shape[1]):
+	for chan in range(numSupprs_res.shape[0]):
+		for epoch in range(numSupprs_res.shape[1]):
 			numSupprs_res[chan,epoch] = len(supressions[epoch][chan])
 	return numSupprs_res
 
 ##########
 # Suppression length μ and σ
-def suppressionLengthStats(eegData,fs):
+def suppressionLengthStats(eegData,fs,suppression_threshold=10):
+	bursts = []
+	supressions = []
+	for epoch in range(eegData.shape[2]):
+		epochBurst,epochSupressions = burst_supression_detection(eegData[:,:,epoch],fs,suppression_threshold=suppression_threshold)#,low=30,high=49)
+		bursts.append(epochBurst)
+		supressions.append(epochSupressions)
 	supressionMean_res = np.zeros((eegData.shape[0], eegData.shape[2]))
 	supressionStd_res = np.zeros((eegData.shape[0], eegData.shape[2]))
-	for chan in range(numSupressions_res.shape[0]):
-		for epoch in range(numSupressions_res.shape[1]):
+	for chan in range(supressionMean_res.shape[0]):
+		for epoch in range(supressionMean_res.shape[1]):
 			supressionMean_res[chan,epoch] = np.mean([suppr[1]-suppr[0] for suppr in supressions[epoch][chan]])
 			supressionStd_res[chan,epoch] = np.std([suppr[1]-suppr[0] for suppr in supressions[epoch][chan]])
-	supressionMean_res = np.nan_to_num(burstMean_res)
-	supressionStd_res = np.nan_to_num(burstStd_res)
+	supressionMean_res = np.nan_to_num(supressionMean_res)
+	supressionStd_res = np.nan_to_num(supressionStd_res)
 	return supressionMean_res, supressionStd_res
 
 ################################################
