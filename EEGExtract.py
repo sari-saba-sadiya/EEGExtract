@@ -111,16 +111,6 @@ def CoherenceDelta(eegData, i, j, fs=100):
     f, Cxy = signal.coherence(eegData[i,:,:], eegData[j,:,:], fs=fs, nfft=nfft, axis=0)#, window=np.hanning(nfft))
     out = np.mean(Cxy[np.all([f >= 0.5, f<=4], axis=0)], axis=0)
     return out
-    
-##########
-# Cross Correlation
-def CrossCorrelation(eegData, i, j, fs=100):
-    out = np.zeros(eegData.shape[2])
-    for epoch in range(eegData.shape[2]):
-        ccor = np.correlate(eegData[i,:,epoch], eegData[j,:,epoch], mode="full")
-        absccor = np.abs(ccor)
-        out[epoch] = (np.max(absccor) - np.mean(absccor)) / np.std(absccor)
-    return out
 
 ##########
 # correlation across channels
@@ -639,7 +629,7 @@ def crossCorrMag(eegData,ii,jj):
 
 ##########
 # Cross-correlation Lag
-def corrCorrLagAux(eegData,ii,jj,fs=100):
+def corrCorrLag(eegData,ii,jj,fs=100):
 	crossCorrLag_res = []
 	for ii, jj in itertools.combinations(range(eegData.shape[0]), 2):
 		crossCorrLag_res.append(corrCorrLag(eegData, ii, jj, fs))
