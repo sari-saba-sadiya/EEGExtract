@@ -15,6 +15,10 @@ A pyhton package for extracting EEG features. First developed for the paper ["Un
 
 To the best of our knowladge EEGExtract is the most comprihensive library for EEG feature extraction currently available. This library is actively mentained, please open an issue if you believe adding a specific feature will be of benefit for the community.  
 
+
+## Setup
+Simply download the code and place teh `EEGExtract.py` file in the same folder as your repo. You can then use `import EEGExtract as eeg`.
+
 ## License
 
 <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">
