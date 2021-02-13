@@ -11,7 +11,7 @@
 </sub>
 
 
-A pyhton package for extracting EEG features. First developed for the paper ["Unsupervised EEG Artifact Detection and Correction"](https://www.frontiersin.org/articles/10.3389/fdgth.2020.608920/abstract), published in Frontiers in Digital Health, Special issue on Machine Learning in Clinical Decision-Making. [Press here](https://www.frontiersin.org/articles/10.3389/fdgth.2020.608920/bibTex) or scroll to the bottom of this page for BibTex citation.
+A pyhton package for extracting EEG features. First developed for the paper ["Unsupervised EEG Artifact Detection and Correction"](https://www.frontiersin.org/articles/10.3389/fdgth.2020.608920/abstract), published in Frontiers in Digital Health, Special issue on Machine Learning in Clinical Decision-Making. [Press here](https://www.frontiersin.org/articles/10.3389/fdgth.2020.608920/bibTex) for a BibTex citation (or scroll to the bottom of this page).
 
 To the best of our knowledge EEGExtract is the most comprehensive library for EEG feature extraction currently available. This library is actively maintained, __please open an issue if you believe adding a specific feature will be of benefit for the community!__
 
