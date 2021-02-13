@@ -17,7 +17,8 @@ To the best of our knowledge EEGExtract is the most comprehensive library for EE
 
 
 ## Setup
-Simply download and place the `EEGExtract.py` file in the same folder as your repo. You can then use `import EEGExtract as eeg`.
+1. Make sure that you have the required packages listed in `requirements.txt`. Use `pip install -r requirements.txt` if unsure. 
+2. Simply download and place the `EEGExtract.py` file in the same folder as your repo. You can then use `import EEGExtract as eeg`.
 
 ## License
 
