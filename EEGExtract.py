@@ -394,7 +394,7 @@ def eegRatio(eegData,fs):
 	powers_alpha = bandPower(eegData, 8, 12, fs)
 	powers_delta = bandPower(eegData, 0.5, 4, fs)
 	ratio_res = np.sum(powers_alpha,axis=0) / np.sum(powers_delta,axis=0)
-	return np.expand_dims(x, axis=0)
+	return np.expand_dims(ratio_res, axis=0)
 
 ###########
 # Regularity (burst-suppression)
