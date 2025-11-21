@@ -8,7 +8,6 @@ import dit
 import librosa
 import statsmodels.api as sm
 import itertools
-from pyinform import mutualinfo
 from statsmodels import tsa
 from sklearn.metrics import mutual_info_score
 import numpy as np
@@ -212,7 +211,7 @@ def mfcc(eegData,fs,order=2):
     H = np.zeros((eegData.shape[0], eegData.shape[2],order))
     for chan in range(H.shape[0]):
         for epoch in range(H.shape[1]):
-            H[chan, epoch, : ] = librosa.feature.mfcc(np.asfortranarray(eegData[chan,:,epoch]), sr=fs)[0:order].T
+            H[chan, epoch, : ] = librosa.feature.mfcc(y=np.asfortranarray(eegData[chan,:,epoch]), sr=fs)[0:order].T
     return H
 
 ##########
@@ -340,8 +339,9 @@ def arma(eegData,order=2):
     H = np.zeros((eegData.shape[0], eegData.shape[2],order))
     for chan in range(H.shape[0]):
         for epoch in range(H.shape[1]):
-            arma_mod = sm.tsa.ARMA(eegData[chan,:,epoch], order=(order,order))
-            arma_res = arma_mod.fit(trend='nc', disp=-1)
+            # ARMA is deprecated, use ARIMA with d=0 instead
+            arma_mod = sm.tsa.ARIMA(eegData[chan,:,epoch], order=(order, 0, order), trend='n')
+            arma_res = arma_mod.fit(method_kwargs={'disp': False})
             H[chan, epoch, : ] = arma_res.arparams
     return H
 
