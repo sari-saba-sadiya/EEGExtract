@@ -1,4 +1,4 @@
-# EEGExtract
+# EEGExtract 1.2.0
 [Sari Saba-Sadiya](https://cse.msu.edu/~sadiyasa/)<sup>1,2</sup>,
 [Eric Chantland]()<sup>2</sup>,
 [Taosheng Liu](https://npal.psy.msu.edu/)<sup>2</sup>,
@@ -9,6 +9,8 @@
 <sup>2</sup> Neuroimaging of Perception and Attention Lab, Michigan State University, Department of Psychology<br>
 <sup>3</sup> Computer Human Intelligence Lab, New York University Abu Dhabi, Department of Electrical and Computer Engineering<br>
 </sub>
+
+**2025 Update:** Thanks to [Alperen Kantarcı](https://github.com/Alpkant) for new update
 
 
 A python package for extracting EEG features. First developed for the paper ["Unsupervised EEG Artifact Detection and Correction"](https://www.frontiersin.org/articles/10.3389/fdgth.2020.608920/abstract), published in Frontiers in Digital Health, Special issue on Machine Learning in Clinical Decision-Making. [Press here](https://www.frontiersin.org/articles/10.3389/fdgth.2020.608920/bibTex) for a BibTex citation (or scroll to the bottom of this page).
